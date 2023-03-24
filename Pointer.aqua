@@ -1,0 +1,7 @@
+abstract class Pointer<T>{
+	debug int len
+	
+	//check for positive index and len
+	native _[](int index)
+
+}

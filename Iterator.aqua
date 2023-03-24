@@ -1,0 +1,11 @@
+abstract class Iterator<T>{
+
+private{
+	T& next()
+	bool hasNext()
+	// Pointer<T> getData()
+	// Pointer<T> data
+}
+
+
+}

@@ -1,0 +1,18 @@
+abstract class Collection{
+
+	const int len
+	
+	Collection(int length)
+	
+	<U> map(Function<T, int => U> fun){
+		new_data = this<U>(len)
+		for (i:len)new_data[i] = fun(/*data[i]*/,i)
+		return $new_data
+	}
+	
+	map(Class<new(T)> cls){
+		new_data = this<cls>(len)
+		for (i:len)new_data[i] = cls(/*data[i]*/)
+		return $new_data
+	}
+}
