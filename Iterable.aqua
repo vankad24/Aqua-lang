@@ -1,3 +1,6 @@
 interface Iterable<T>{
-	Iterator<T> iterator()
+	const int len
+	
+	//функция обрящения к данным без проверок (обычно напрямую к указателю)
+	T& iterate(int index)
 }

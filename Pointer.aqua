@@ -1,5 +1,5 @@
 abstract class Pointer<T>{
-	debug int len
+	private debug const int len
 	
 	//check for positive index and len
 	native _[](int index)
