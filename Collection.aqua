@@ -70,17 +70,17 @@ abstract class Collection<T> : Iterable<T>{
 
     mean()=> sum()/len
 	
-	min(Funtion<int=>U> fun = (=> iterate(it)) ){
-        m = fun(0) //m is read-only reference
+	min(Funtion<T,T=>bool> comparator = (=>it[0]<it[1]) ){
+        m = iterate(0) //m is read-only reference
         for (i=1 : len)
-            if (fun(i)<m)m=fun(i)
+            if (comparator(iterate(i), m))m=iterate(i)
         return $m
     }
 	
-	max(Funtion<int=>U> fun = (=> iterate(it)) ){
-        m = fun(0) //m is read-only reference
+	max(Funtion<T,T=>bool> comparator = (=>it[0]>it[1]) ){
+        m = iterate(0) //m is read-only reference
         for (i=1 : len)
-            if (fun(i)>m)m=fun(i)
+            if (comparator(iterate(i), m))m=iterate(i)
         return $m
     }
     
