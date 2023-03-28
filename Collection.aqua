@@ -37,7 +37,7 @@ abstract class Collection<T> : Iterable<T>{
             fun(iterate(i),i)
     }
 	
-	reduce(Funtion<T, T=>T> fun){
+	reduce(Funtion<T, T=>T$> fun){
         value = $iterate(0)
         for (x:this) {
             value = fun(value, x)
@@ -45,7 +45,7 @@ abstract class Collection<T> : Iterable<T>{
         return $value
     }
 	
-	reduce(Funtion<T, T=>T> fun, T startValue){
+	reduce(Funtion<T, T=>T$> fun, T startValue){
         value = $startValue
         for (x:this) {
             value = fun(value, x)
