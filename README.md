@@ -1,5 +1,7 @@
 # Язык программирования Aqua
-<img src="aqua_logo.svg" alt="Aqua logo" width="100" height="100" style="margin: auto; display: block;">
+<p align="center">
+  <img src="aqua_logo.svg" alt="Aqua logo" width="120" height="120">
+</p>
 
 ## О языке
 - Почему **Aqua**? Потому что код чистый, как стёклышко!
