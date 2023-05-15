@@ -760,3 +760,9 @@ promise о том, что ты заполнишь ссылку позже
 julia> f = +;
 julia> f(1,2,3)
 >>>6 
+
+Взаимодействие с функцией, как с объектом
+inst = function.instance()
+inst.age = 20
+inst.name = "Vova"
+inst.call()
