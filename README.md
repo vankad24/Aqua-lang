@@ -876,3 +876,4 @@ welcome.wrap("ladybug", "|")
 
 parent или super?
 
+Что быстрее `Dict<srt, Any>` или Json?
