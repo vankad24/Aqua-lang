@@ -827,6 +827,18 @@ result = match(string){
 }
 ```
 
+Обработка объекта Any с помощью match.
+```
+match(any_obj){
+	x:Cat => x.meow()
+	:Dog => it.woof()
+	else {
+		println("This is not a cat or dog")
+		println(this)
+	}
+}
+```
+
 Null может быть только в объекте Memory (нулевой указатель) и при обращении к объекту memory[index] внутри вызовется проверка и если указатель внутри null, вызовется Exception
 
 Aqua Query Language - AQL для запросов к бд.
