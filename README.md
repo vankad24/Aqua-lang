@@ -64,71 +64,48 @@
 - Написание ПК и консольных приложений
 - Инструменты для обработки больших объемов данных, что пригодится для анализа данных и машинного обучения
 ### Принцип работы с памятью
-- По умолчанию всё везде передаётся по ссылкам, кроме int, float, long, char и других, т.к. к ним применён модификатор `autocopy`.
-- В языке всё должно быть инициализировано, никаких null.
-- Используется концепция, схожая на владение в Rust
-- Существует 4 вида сущностей: **object, read-only reference, mutable reference, free-object**. **free-object** - скопированный объект, анонимный объект или литерал.
+- Есть 3 способа взаимодействия с переменными: передача по ссылке, передача копии и перенос объекта (move).
+- По умолчанию int, float, long, char и другие "примитивы" копируются, так как к ним применён модификатор `autocopy`.
+- Все поля класса должны быть инициализированы в конструкторе. Никаких null.
 ```dart
-Комментарии подписывают, чем является левая часть выражения.
-a_obj = Animal()    //object
-ro_ref = a_obj      //create read-only reference
-mut_ref = &a_obj    //create mutable reference
-ro_ref2 = ro_ref    //create read-only reference
-ro_ref3 = mut_ref   //create read-only reference
-mut_ref2 = &ro_ref  //create mutable reference
-mut_ref3 = &mut_ref //create mutable reference
-c_obj = $a_obj   //copied object
-c_obj2 = $ro_ref //copied object
-ro_ref = ro_ref2 //rewrite read-only reference
-ro_ref = mut_ref //rewrite read-only reference
-mut_ref = ro_ref //error
-a_obj = ro_ref   //error
-a_obj = mut_ref  //error
-a_obj = $ro_ref  //rewrite a_obj
-a_obj = $mut_ref //rewrite a_obj
-mut_ref = mut_ref2  //rewrite mutable reference
-mut_ref = &mut_ref2 //rewrite mutable reference
+obj = SomeClass()
 
-a_obj2 = Animal() //object
-a_obj2 = a_obj    //copy a_obj to a_obj2
-a_obj2 = ro_ref   //error
-a_obj2 = mut_ref  //error
-a_obj2 = &a_obj   //error
-ro_ref4 = a_obj2  //create read-only reference
-ro_ref4 = $ro_ref //copy a_obj to a_obj2
+//ссылка на объект obj
+ref = obj
+ref2 = ref
 
-//Functions, that takes:
-foo1(Animal a)  //read-only reference
-foo2(Animal &a) //mutable reference
-foo3(Animal $a) //free object
+//глубокая копия объекта (не копирует указатели, а выделяет новый и копирует данные)
+copy = $obj
 
-foo2(ro_ref)  //error
-foo3(ro_ref)  //error
-foo3(mut_ref) //error
-foo1(mut_ref) //correct
-foo3($ro_ref) //correct
-foo1(a_obj)   //correct
-foo2(a_obj)   //correct
-foo3($a_obj)  //correct
-foo3(a_obj)   //copy of a_obj
-foo3(ro_ref)  //error
-foo3(mut_ref) //error
+//объект obj переместился и стал неинициализированным, его больше нельзя использовать (при переносе копирует указатели, а не данные)
+moved_obj = &obj
 
-bar1(Animal a, Animal a2)   //2 read-only references
-bar2(Animal &a, Animal &a2) //2 mutable references
+/*массивы*/
+//массив из ссылок. В памяти как n указателей
+arr = SomeClass[n]
+//запись ссылки в массив
+arr[0]=obj
 
-bar1(ro_ref, ro_ref) //correct
-bar1(mut_ref, a)     //correct
-bar1(a, a)           //correct
-bar2(mut_ref, a)     //error, 2 mutable references
-bar2(a, a)           //error, 2 mutable references
-bar2(a, a_obj2)      //correct
-bar2(a, $a)          //correct
+//массив из объектов. В памяти как n последовательных объектов SomeClass
+arr = SomeClass$[n]
+//запись копии в массив
+arr[0]=obj
+
+//массив из объектов, но с автоматическим переносом
+arr = SomeClass&[n]
+//перенос obj в массив. Объект, который был в arr[0] удаляется
+arr[0]=obj
+
+/*передача параметра в функцию*/
+//передача по ссылке
+fun(SomeClass arg)
+
+//передача копии (по значению)
+fun(SomeClass$ arg)
+
+//перенос объекта (после передачи объекта в функцию, объект станет неинициализированным)
+fun(SomeClass& arg)
 ```
-- Одновременно может быть только одна **mutable reference** или много **read-only reference**. Одновременно и того, и другого быть не может, чтобы не получилась ситуация, что из одного потока объект изменяют, а из другого читают. При выходе из области видимости они удаляются.
-- Через **read-only reference** нельзя вызывать у объекта изменяющие функции. К этим функциям относятся те, что вызывают оператор `=` у какого-то из полей класса. Это свойство учитывается только на этапе компиляции.
-- **mutable reference** ведёт себя, как и **object**, позволяет изменять объект
-- Можно просто в коде писать фигурные скобки `{ ... }`, чтобы создать область видимости, при выходе из которой, объекты удалятся.
 ## Синтаксис
 ### Синтаксические нормы
 - Использование ; только при написании в одной строке (как в js)
@@ -160,6 +137,7 @@ catch NotFoundException{
 }
 ```
 - По умолчанию объекты создаются в стеке, а указатели выделяются в куче. Чтобы вручную выделить объект в куче, понадобится воспользоваться аллокатором: `obj = alloc(MyObject)`
+- Можно создавать блоки (писать фигурные скобки `{ ... }`), чтобы создать область видимости, при выходе из которой, объекты удалятся.
 ### Операторы
 - Переопределение операторов синтаксисом: `_+=(int num){ ... }`, `_==(int num) => this.len == num`
 - Вызов оператора, как функцию класса: `str._+("hi",5)` равносильно `"hi"+5`
