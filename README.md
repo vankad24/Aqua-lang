@@ -1071,3 +1071,18 @@ while true оптимизация
 Ключевое слово redo (повторение цикла)
 
 func(int a, b, float c)
+
+Цикл, как функция
+myfor = for i=0: 24{
+	print(i)
+}
+myfor.run()
+
+Помечать цикл (чтобы выходить из него через break)
+#label
+for i=0: 24{
+	for j=0: 24{
+		print(i)
+		break label
+	}
+}
