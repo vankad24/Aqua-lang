@@ -1101,3 +1101,5 @@ for i=0: 24{
 		break label
 	}
 }
+
+Эффективен и нужен ли once и occasional?
