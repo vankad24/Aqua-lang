@@ -1131,3 +1131,18 @@ use super-lib-1.2.4
 Если версия одна, то можно не прописывать.
 
 Кастомные операторы?
+
+Оператор проверки cast
+int a = longNum:int ?? 24
+
+В go используется rune для utf-8 символов
+
+В классе Map ключом может быть только move object: Map<&List, int>
+
+union в языке???
+
+Посмотреть go-рутины в языке go. Там хороший планировщик
+
+Either в kotlin вместо exception'ов
+
+reified type parameters в дженериках kotlin
