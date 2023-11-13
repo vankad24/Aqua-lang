@@ -1160,3 +1160,21 @@ reified type parameters в дженериках kotlin
 Сокращение pub, а не public
 
 Вычисление функций во время компиляции, как в zig
+
+Идея: интерфейс - набор функций, но не методов
+```
+interface Shape{
+	setCoords(double this.x,  double this.y, double x, double y){
+		this.x = x
+		this.y = y
+	}
+}
+class Rect : Shape{
+	double x1
+	double y1
+
+	override setCoords(x1, y1)
+}
+
+
+```
