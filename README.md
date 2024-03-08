@@ -1241,3 +1241,10 @@ val ab: A = object : A(1), B {
     override val y = 15
 }
 ```
+
+Для элементов перечислений enum можно получить название константы:
+enum Test{
+    FIRST_ELEMENT,
+	SECOND_ELEMENT
+}
+Test.FIRST_ELEMENT:Str // вернёт "FIRST_ELEMENT"
