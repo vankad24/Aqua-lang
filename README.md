@@ -1305,3 +1305,15 @@ class Animal{
 	doSmth(){ ... }
 }
 ```
+
+Проблему с несколькими ссылками на один объект можно решить с помощью класса обёртки, в котором уже может храниться объект:
+```
+box = Box<User>()
+
+ref1 = box
+ref2 = box
+
+box.set(User("Harry Potter"))
+//do smth
+box.set(User("Morty"))
+```
